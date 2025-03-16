@@ -4,8 +4,12 @@ export const Navconstants = [
         to: '/',
     },
     {
-        title: 'Dashboard',
-        to: '/dashboard',
+        title: 'Students',
+        to: '/Students',
+    },
+    {
+        title: 'Contests',
+        to: '/contests',
     },
 
 ]
