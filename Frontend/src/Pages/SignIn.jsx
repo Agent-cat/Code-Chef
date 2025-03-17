@@ -38,7 +38,7 @@ const SignIn = ({ onLogin }) => {
       localStorage.setItem('token', data.token);
       localStorage.setItem('user', JSON.stringify(data.user));
       onLogin(data.user);
-      navigate('/dashboard');
+      navigate('/');
     } catch (err) {
       setError(err.message);
     }

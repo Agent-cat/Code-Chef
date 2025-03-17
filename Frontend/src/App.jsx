@@ -3,6 +3,9 @@ import Navbar from './components/Navbar';
 
 import { useNavigate } from 'react-router-dom';
 import Navroutes from './routes/Navroutes';
+import StudentStats from './Pages/StudentStats';
+import { Routes, Route } from 'react-router-dom';
+import ContestAttendance from './Pages/ContestAttendance';
 
 const App = () => {
   const [user, setUser] = useState(null);
@@ -29,6 +32,7 @@ const App = () => {
   return (
     <div className="App">
       <Navbar user={user} onLogout={handleLogout} />
+      
       <Navroutes onLogin={handleLogin} />
     </div>
   );

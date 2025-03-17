@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const ContestCard = ({ contest, type }) => {
     const getCardColor = () => {
-        return type === 'future' ? 'bg-gradient-to-br from-blue-500 to-purple-600' : 'bg-gradient-to-br from-gray-500 to-gray-700';
+        return type === 'future' ? 'bg-green-400 ' : 'bg-red-400';
     };
 
     const formatDate = (dateString) => {
@@ -38,20 +39,29 @@ const ContestCard = ({ contest, type }) => {
                         <p className="font-medium">{contest.distinct_users.toLocaleString()}</p>
                     </div>
                 )}
-                <a
-                    href={`https://www.codechef.com/${contest.contest_code}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="mt-4 inline-block bg-white bg-opacity-20 hover:bg-opacity-30 px-4 py-2 rounded-md transition-all duration-200"
-                >
-                    View Contest
-                </a>
+                <div className="flex flex-col space-y-2 mt-4">
+                    <a
+                        href={`https://www.codechef.com/${contest.contest_code}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-block bg-white bg-opacity-20 hover:bg-opacity-30 px-4 py-2 rounded-md text-center transition-all duration-200"
+                    >
+                        View Contest
+                    </a>
+                    <a
+                        href={`/contest-attendance/${contest.contest_code}`}
+                        className="inline-block bg-white bg-opacity-20 hover:bg-opacity-30 px-4 py-2 rounded-md text-center transition-all duration-200"
+                    >
+                        View Attendance
+                    </a>
+                </div>
             </div>
         </div>
     );
 };
 
 const Contest = () => {
+    const navigate = useNavigate();
     const [contests, setContests] = useState({
         future: [],
         past: []
@@ -113,7 +123,17 @@ const Contest = () => {
 
     return (
         <div className="min-h-[calc(100vh-5rem)] p-6 bg-gray-50">
-            {/* Future Contests Section */}
+            <button
+                onClick={() => navigate(-1)}
+                className="mb-6 px-4 py-2 text-black rounded-md hover:bg-text-800 transition-colors duration-200 flex items-center"
+            >
+                <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                </svg>
+                Back
+            </button>
+
+            
             <section className="mb-12">
                 <h2 className="text-3xl font-bold mb-6 text-gray-800">Upcoming Contests</h2>
                 {contests.future.length === 0 ? (
@@ -133,7 +153,7 @@ const Contest = () => {
                 )}
             </section>
 
-            {/* Past Contests Section */}
+          
             <section>
                 <h2 className="text-3xl font-bold mb-6 text-gray-800">Past Contests</h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

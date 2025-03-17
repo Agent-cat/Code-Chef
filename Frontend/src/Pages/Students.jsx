@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import StudentModal from '../components/StudentModal';
 import ConfirmationModal from '../components/ConfirmationModal';
+import { Link } from 'react-router-dom';
 
 const StudentForm = ({ onSubmit, initialData, formData, setFormData }) => (
     <form onSubmit={onSubmit} className='space-y-4 w-full'>
@@ -47,6 +48,7 @@ const StudentForm = ({ onSubmit, initialData, formData, setFormData }) => (
 
 const Students = () => {
     const [students, setStudents] = useState([]);
+    const [filteredStudents, setFilteredStudents] = useState([]);
     const [formData, setFormData] = useState({
         codechefId: '',
         studentId: '',
@@ -58,11 +60,22 @@ const Students = () => {
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
     const [selectedStudent, setSelectedStudent] = useState(null);
+    const [searchQuery, setSearchQuery] = useState('');
 
-    // Fetch students on component mount
+    
     useEffect(() => {
         fetchStudents();
     }, []);
+
+    
+    useEffect(() => {
+        const filtered = students.filter(student => 
+            student.studentName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            student.studentId.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            student.codechefId.toLowerCase().includes(searchQuery.toLowerCase())
+        );
+        setFilteredStudents(filtered);
+    }, [searchQuery, students]);
 
     useEffect(() => {
         if (success || error) {
@@ -85,6 +98,7 @@ const Students = () => {
             const data = await response.json();
             if (!response.ok) throw new Error(data.message);
             setStudents(data.students);
+            setFilteredStudents(data.students); 
         } catch (err) {
             setError(err.message);
         }
@@ -179,9 +193,13 @@ const Students = () => {
         setIsEditModalOpen(true);
     };
 
+    const handleSearch = (e) => {
+        setSearchQuery(e.target.value);
+    };
+
     return (
         <div className='p-4 sm:p-6 max-w-6xl mx-auto'>
-            {/* Header Section */}
+            
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
                 <h1 className='text-2xl sm:text-3xl font-bold'>Students Management</h1>
                 <button
@@ -192,7 +210,25 @@ const Students = () => {
                 </button>
             </div>
 
-            {/* Notifications */}
+            
+            <div className="mb-6">
+                <div className="relative">
+                    <input
+                        type="text"
+                        placeholder="Search by name, student ID, or CodeChef ID..."
+                        value={searchQuery}
+                        onChange={handleSearch}
+                        className="w-full px-4 py-2 pl-10 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent"
+                    />
+                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <svg className="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                        </svg>
+                    </div>
+                </div>
+            </div>
+
+           
             {error && (
                 <div className='fixed top-4 right-4 left-4 sm:left-auto bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded z-50'>
                     {error}
@@ -204,9 +240,9 @@ const Students = () => {
                 </div>
             )}
 
-            {/* Mobile View - Cards */}
+            
             <div className="block sm:hidden space-y-4">
-                {students.map((student) => (
+                {filteredStudents.map((student) => (
                     <div key={student._id} className="bg-white rounded-lg shadow-md p-4">
                         <div className="space-y-2">
                             <div>
@@ -255,9 +291,16 @@ const Students = () => {
                         </tr>
                     </thead>
                     <tbody className='bg-white divide-y divide-gray-200'>
-                        {students.map((student) => (
+                        {filteredStudents.map((student) => (
                             <tr key={student._id} className="hover:bg-gray-50">
-                                <td className='px-6 py-4 whitespace-nowrap'>{student.studentName}</td>
+                                <td className='px-6 py-4 whitespace-nowrap'>
+                                    <Link
+                                        to={`/student-stats/${student.codechefId}`}
+                                        className="text-blue-600 hover:text-blue-800 hover:underline"
+                                    >
+                                        {student.studentName}
+                                    </Link>
+                                </td>
                                 <td className='px-6 py-4 whitespace-nowrap'>{student.studentId}</td>
                                 <td className='px-6 py-4 whitespace-nowrap'>{student.codechefId}</td>
                                 <td className='px-6 py-4 whitespace-nowrap'>
