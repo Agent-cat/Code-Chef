@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const ContestCard = ({ contest, type }) => {
     const getCardColor = () => {
-        return type === 'future' ? 'bg-green-400 ' : 'bg-red-400';
+        return type === 'future' ? 'bg-green-700 ' : 'bg-gray-700';
     };
 
     const formatDate = (dateString) => {
@@ -48,12 +48,12 @@ const ContestCard = ({ contest, type }) => {
                     >
                         View Contest
                     </a>
-                    <a
-                        href={`/contest-attendance/${contest.contest_code}`}
+                    <Link
+                        to={`/contest-attendance/${contest.contest_code}`}
                         className="inline-block bg-white bg-opacity-20 hover:bg-opacity-30 px-4 py-2 rounded-md text-center transition-all duration-200"
                     >
                         View Attendance
-                    </a>
+                    </Link>
                 </div>
             </div>
         </div>

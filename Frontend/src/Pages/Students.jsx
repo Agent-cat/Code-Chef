@@ -201,7 +201,7 @@ const Students = () => {
         <div className='p-4 sm:p-6 max-w-6xl mx-auto'>
             
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
-                <h1 className='text-2xl sm:text-3xl font-bold'>Students Management</h1>
+                <h1 className='text-2xl sm:text-3xl font-bold'>Counseling Students</h1>
                 <button
                     onClick={openAddModal}
                     className="w-full sm:w-auto bg-black text-white px-4 py-2 rounded-md hover:bg-gray-800"

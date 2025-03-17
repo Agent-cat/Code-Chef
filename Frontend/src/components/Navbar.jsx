@@ -28,7 +28,7 @@ const Navbar = ({ user, onLogout }) => {
             <img src={codechefLogo} alt="logo" /> CodeChef
           </NavLink>
 
-          <div className="hidden md:flex items-center space-x-4">
+          <div className="hidden md:flex items-center space-x-6 font-semibold text-md">
             {Navconstants.map((navItem, index) => (
               <NavLink
                 key={index}
