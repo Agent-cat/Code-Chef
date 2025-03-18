@@ -48,12 +48,14 @@ const ContestCard = ({ contest, type }) => {
                     >
                         View Contest
                     </a>
-                    <Link
-                        to={`/contest-attendance/${contest.contest_code}`}
-                        className="inline-block bg-white bg-opacity-20 hover:bg-opacity-30 px-4 py-2 rounded-md text-center transition-all duration-200"
-                    >
-                        View Attendance
-                    </Link>
+                    {type === 'past' && (
+                        <Link
+                            to={`/contest-attendance/${contest.contest_code}`}
+                            className="inline-block bg-white bg-opacity-20 hover:bg-opacity-30 px-4 py-2 rounded-md text-center transition-all duration-200"
+                        >
+                            View Attendance
+                        </Link>
+                    )}
                 </div>
             </div>
         </div>

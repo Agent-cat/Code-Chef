@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { FaBars, FaTimes, FaUser } from 'react-icons/fa';
-import { Navconstants } from '../constants/Navconstant';
+import { publicNavConstants, protectedNavConstants } from '../constants/Navconstant';
 import codechefLogo from '../assets/codechef.svg';
+
 const Navbar = ({ user, onLogout }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [showUserMenu, setShowUserMenu] = useState(false);
@@ -20,6 +21,8 @@ const Navbar = ({ user, onLogout }) => {
     setShowUserMenu(false);
   };
 
+  const navItems = user ? [...publicNavConstants, ...protectedNavConstants] : publicNavConstants;
+
   return (
     <nav className="relative bg-white shadow-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -29,7 +32,7 @@ const Navbar = ({ user, onLogout }) => {
           </NavLink>
 
           <div className="hidden md:flex items-center space-x-6 font-semibold text-md">
-            {Navconstants.map((navItem, index) => (
+            {navItems.map((navItem, index) => (
               <NavLink
                 key={index}
                 to={navItem.to}
@@ -114,7 +117,7 @@ const Navbar = ({ user, onLogout }) => {
           } fixed top-16 left-0 bottom-0 bg-white w-full shadow-xl transform transition-all duration-300 ease-in-out md:hidden z-50`}
       >
         <div className="flex flex-col p-4 space-y-4">
-          {Navconstants.map((navItem, index) => (
+          {navItems.map((navItem, index) => (
             <NavLink
               key={index}
               to={navItem.to}

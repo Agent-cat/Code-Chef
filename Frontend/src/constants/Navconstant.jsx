@@ -1,19 +1,18 @@
-export const Navconstants = [
+export const publicNavConstants = [
     {
         title: 'Home',
         to: '/',
-    },
+    }
+];
+
+export const protectedNavConstants = [
     {
         title: 'Students',
-        to: '/Students',
+        to: '/students',
     },
     {
         title: 'Contests',
         to: '/contests',
     },
-    {
-        title: 'Telegram',
-        to: '/telegram',
-    },
-
-]
+    
+];

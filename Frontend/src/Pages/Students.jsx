@@ -247,7 +247,12 @@ const Students = () => {
                         <div className="space-y-2">
                             <div>
                                 <label className="text-xs text-gray-500">Student Name</label>
-                                <p className="font-medium">{student.studentName}</p>
+                                <Link
+                                    to={`/student-stats/${student.codechefId}`}
+                                    className="block font-medium text-blue-600 hover:text-blue-800 hover:underline"
+                                >
+                                    {student.studentName}
+                                </Link>
                             </div>
                             <div>
                                 <label className="text-xs text-gray-500">Student ID</label>
