@@ -9,6 +9,7 @@ import StudentStats from '../Pages/StudentStats'
 import ContestAttendance from '../Pages/ContestAttendance'
 
 
+
 const Navroutes = ({ onLogin }) => {
   return (
     <Routes>
@@ -17,7 +18,7 @@ const Navroutes = ({ onLogin }) => {
       <Route path="/students" element={<Students />} />
       <Route path="/student-stats/:handle" element={<StudentStats />} />
         <Route path="/contest-attendance/:contestCode" element={<ContestAttendance />} />
-      
+        
       <Route path="/signin" element={<SignIn onLogin={onLogin} />} />
       <Route path="/signup" element={<SignUp onLogin={onLogin} />} />
     </Routes>

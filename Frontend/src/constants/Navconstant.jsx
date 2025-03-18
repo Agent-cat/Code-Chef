@@ -11,5 +11,9 @@ export const Navconstants = [
         title: 'Contests',
         to: '/contests',
     },
+    {
+        title: 'Telegram',
+        to: '/telegram',
+    },
 
 ]
