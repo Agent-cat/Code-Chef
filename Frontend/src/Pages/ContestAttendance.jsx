@@ -15,7 +15,7 @@ const ContestAttendance = () => {
             try {
                 setLoading(true);
                 const token = localStorage.getItem('token');
-                const studentsResponse = await axios.get('http://localhost:3000/api/students', {
+                const studentsResponse = await axios.get('https://code-chef.onrender.com/api/students', {
                     headers: {
                         'Authorization': `Bearer ${token}`
                     }

@@ -75,7 +75,7 @@ const Contest = () => {
         const fetchContests = async () => {
             try {
                 setLoading(true);
-                const response = await axios.get('http://localhost:3000/api/codechef/contests');
+                const response = await axios.get('https://code-chef.onrender.com/api/codechef/contests');
                 setContests({
                     future: response.data.future_contests,
                     past: response.data.past_contests
