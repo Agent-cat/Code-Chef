@@ -3,6 +3,8 @@ const axios = require('axios');
 const BOT_TOKEN = "7314366996:AAG3pxhSvHQPqgfdUJkFl1BpnIvN2laApPc";
 const API_URL = `https://api.telegram.org/bot${BOT_TOKEN}`;
 
+const notifiedContests = new Set();
+
 const getChatIds = async () => {
     try {
         const response = await axios.get(`${API_URL}/getUpdates`);
@@ -51,22 +53,27 @@ const sendMessage = async (message) => {
 const checkAndNotifyContests = async () => {
     try {
         const response = await axios.get('http://localhost:3000/api/codechef/contests');
-        const futureContests = response.data.future_contests;
+        const futureContests = response.data.future_contests[0];
+        console.log("futureContests", futureContests);
+        
+        if (futureContests) {
+            if (notifiedContests.has(futureContests.contest_code)) {
+                return;
+            }
 
-        for (const contest of futureContests) {
-            const startTime = new Date(contest.contest_start_date_iso);
+            const startTime = new Date(futureContests.contest_start_date_iso);
             const currentTime = new Date();
             const timeUntilStart = startTime - currentTime;
-
-           
+            console.log("timeUntilStart", timeUntilStart);
             if (timeUntilStart > 0 && timeUntilStart <= 5 * 60 * 1000) {
                 const message = `🚨 <b>Contest Starting Soon!</b> 🚨\n\n` +
-                    `Contest: ${contest.contest_name}\n` +
-                    `Start Time: ${contest.contest_start_date}\n` +
-                    `Duration: ${contest.contest_duration} minutes\n\n` +
-                    `Join now: https://www.codechef.com/${contest.contest_code}`;
+                    `Contest: ${futureContests.contest_name}\n` +
+                    `Start Time: ${futureContests.contest_start_date}\n` +
+                    `Duration: ${futureContests.contest_duration} minutes\n\n` +
+                    `Join now: https://www.codechef.com/${futureContests.contest_code}`;
                 
                 await sendMessage(message);
+                notifiedContests.add(futureContests.contest_code);
             }
         }
     } catch (error) {
@@ -74,8 +81,16 @@ const checkAndNotifyContests = async () => {
     }
 };
 
+const clearNotifiedContests = () => {
+    notifiedContests.clear();
+    console.log('Cleared notified contests set');
+};
+
 
 setInterval(checkAndNotifyContests, 60 * 1000);
+
+
+setInterval(clearNotifiedContests, 7 * 15 * 60 * 60 * 1000);
 
 
 checkAndNotifyContests();
