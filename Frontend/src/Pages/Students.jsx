@@ -90,7 +90,7 @@ const Students = () => {
     const fetchStudents = async () => {
         try {
             const token = localStorage.getItem('token');
-            const response = await fetch('https://code-chef.onrender.com/api/students', {
+            const response = await fetch('http://localhost:3000/api/students', {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
@@ -116,7 +116,7 @@ const Students = () => {
         e.preventDefault();
         try {
             const token = localStorage.getItem('token');
-            const response = await fetch('https://code-chef.onrender.com/api/students/add-student', {
+            const response = await fetch('http://localhost:3000/api/students/add-student', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -140,7 +140,7 @@ const Students = () => {
         e.preventDefault();
         try {
             const token = localStorage.getItem('token');
-            const response = await fetch(`https://code-chef.onrender.com/api/students/${selectedStudent._id}`, {
+            const response = await fetch(`http://localhost:3000/api/students/${selectedStudent._id}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -163,7 +163,7 @@ const Students = () => {
     const handleDelete = async () => {
         try {
             const token = localStorage.getItem('token');
-            const response = await fetch(`https://code-chef.onrender.com/api/students/${selectedStudent._id}`, {
+            const response = await fetch(`http://localhost:3000/api/students/${selectedStudent._id}`, {
                 method: 'DELETE',
                 headers: {
                     'Authorization': `Bearer ${token}`

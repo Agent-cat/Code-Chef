@@ -23,7 +23,7 @@ const SignUp = ({ onLogin }) => {
     setError('');
 
     try {
-      const response = await fetch('https://code-chef.onrender.com/api/users/signup', {
+      const response = await fetch('http://localhost:3000/api/users/signup', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
