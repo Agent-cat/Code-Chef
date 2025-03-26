@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 
-const ContestAttendance = () => {
+const ContestAttendance = ({ contests }) => {
     const { contestCode } = useParams();
     const [attendance, setAttendance] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -27,12 +27,9 @@ const ContestAttendance = () => {
                         try {
                             const response = await axios.get(`https://codechef-api.vercel.app/handle/${student.codechefId}`);
                             const hasAttempted = response.data.ratingData?.some(
-                                contest =>{
-                                   
-                                    return contest.code.slice(0, -1) === contestCode;
-                                } 
+                                contest => contest.code.slice(0, -1) === contestCode
                             ) || false;
-                           
+
                             return {
                                 ...student,
                                 status: hasAttempted ? 'Present' : 'Absent'

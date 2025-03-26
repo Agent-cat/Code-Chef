@@ -9,13 +9,13 @@ import StudentStats from '../Pages/StudentStats'
 import ContestAttendance from '../Pages/ContestAttendance'
 import ProtectedRoute from '../components/ProtectedRoute'
 
-const Navroutes = ({ onLogin }) => {
+const Navroutes = ({ onLogin, contests, loading, error }) => {
   return (
     <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/contests" element={
         <ProtectedRoute>
-          <Contest />
+          <Contest contests={contests} loading={loading} error={error} />
         </ProtectedRoute>
       } />
       <Route path="/students" element={

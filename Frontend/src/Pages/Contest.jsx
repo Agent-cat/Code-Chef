@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 const ContestCard = ({ contest, type }) => {
@@ -62,34 +61,8 @@ const ContestCard = ({ contest, type }) => {
     );
 };
 
-const Contest = () => {
+const Contest = ({ contests, loading, error }) => {
     const navigate = useNavigate();
-    const [contests, setContests] = useState({
-        future: [],
-        past: []
-    });
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
-
-    useEffect(() => {
-        const fetchContests = async () => {
-            try {
-                setLoading(true);
-                const response = await axios.get('http://localhost:3000/api/codechef/contests');
-                setContests({
-                    future: response.data.future_contests,
-                    past: response.data.past_contests
-                });
-            } catch (err) {
-                setError('Failed to fetch contests. Please try again later.');
-                console.error('Error fetching contests:', err);
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        fetchContests();
-    }, []);
 
     if (loading) {
         return (
@@ -135,7 +108,6 @@ const Contest = () => {
                 Back
             </button>
 
-            
             <section className="mb-12">
                 <h2 className="text-3xl font-bold mb-6 text-gray-800">Upcoming Contests</h2>
                 {contests.future.length === 0 ? (
@@ -155,7 +127,6 @@ const Contest = () => {
                 )}
             </section>
 
-          
             <section>
                 <h2 className="text-3xl font-bold mb-6 text-gray-800">Past Contests</h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
