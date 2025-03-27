@@ -277,7 +277,7 @@ const Students = () => {
                     </div>
                 </RoleBasedComponent>
                 
-                {/* Rest of the component with student table, etc. */}
+                
                 <div className="mb-6">
                     <div className="relative">
                         <input
@@ -306,7 +306,41 @@ const Students = () => {
                     </div>
                 )}
 
-                {/* Desktop View - Table */}
+               
+                <div className="sm:hidden space-y-4">
+                    {filteredStudents.map((student) => (
+                        <div key={student._id} className="bg-white p-4 rounded-lg shadow">
+                            <Link
+                                to={`/student-stats/${student.codechefId}`}
+                                className="text-lg font-medium text-blue-600 hover:text-blue-800 hover:underline block mb-2"
+                            >
+                                {student.studentName}
+                            </Link>
+                            <div className="text-sm text-gray-600 space-y-1">
+                                <p>Student ID: {student.studentId}</p>
+                                <p>CodeChef ID: {student.codechefId}</p>
+                            </div>
+                            <div className="mt-4 flex space-x-4">
+                                <button
+                                    onClick={() => openEditModal(student)}
+                                    className="text-blue-600 hover:text-blue-800"
+                                >
+                                    Edit
+                                </button>
+                                <button
+                                    onClick={() => {
+                                        setSelectedStudent(student);
+                                        setIsDeleteModalOpen(true);
+                                    }}
+                                    className="text-red-600 hover:text-red-800"
+                                >
+                                    Delete
+                                </button>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+               
                 <div className='hidden sm:block bg-white rounded-lg shadow-md overflow-x-auto'>
                     <table className='min-w-full'>
                         <thead className='bg-gray-50'>

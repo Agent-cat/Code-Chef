@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 const AdminDashboard = () => {
   const [counselors, setCounselors] = useState([]);
@@ -78,9 +79,9 @@ const AdminDashboard = () => {
                 </button>
               </div>
               <div className="divide-y divide-gray-200">
-                {selectedCounselor.counselingStudents.map(student => (
+                {selectedCounselor.students.map(student => (
                   <div key={student._id} className="py-4">
-                    <h3 className="text-lg font-medium text-gray-900">{student.studentName}</h3>
+                    <Link to={`/student-stats/${student.codechefId}`} className="text-lg font-medium text-gray-900 hover:text-blue-600 hover:underline">{student.studentName}</Link>
                     <p className="text-gray-500">Student ID: {student.studentId}</p>
                   </div>
                 ))}

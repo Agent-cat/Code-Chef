@@ -7,10 +7,10 @@ router.get("/counselors", async (req, res) => {
     try {
         const counselors = await User.find({ role: "counselor" }).lean();
         const counselorData = await Promise.all(counselors.map(async (counselor) => {
-            const students = await Student.find({ counselorId: counselor._id });
+            const students = await Student.find({ counselorName: counselor._id });
             return {
                 ...counselor,
-                studentCount: students.length,
+                studentCount: counselor.counselingStudents.length,
                 students
             };
         }));
