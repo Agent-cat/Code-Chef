@@ -1,7 +1,12 @@
 import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { FaBars, FaTimes, FaUser } from 'react-icons/fa';
-import { publicNavConstants, protectedNavConstants } from '../constants/Navconstant';
+import { 
+  publicNavConstants, 
+  protectedNavConstants, 
+  hodNavConstants, 
+  deanNavConstants 
+} from '../constants/Navconstant';
 import codechefLogo from '../assets/codechef.svg';
 
 const Navbar = ({ user, onLogout }) => {
@@ -21,7 +26,20 @@ const Navbar = ({ user, onLogout }) => {
     setShowUserMenu(false);
   };
 
-  const navItems = user ? [...publicNavConstants, ...protectedNavConstants] : publicNavConstants;
+  // Determine which nav items to show based on user role
+  let navItems = [...publicNavConstants];
+  
+  if (user) {
+    navItems = [...navItems, ...protectedNavConstants];
+    
+    if (user.role === 'HOD') {
+      navItems = [...navItems, ...hodNavConstants];
+    }
+    
+    if (user.role === 'Dean') {
+      navItems = [...navItems, ...deanNavConstants];
+    }
+  }
 
   return (
     <nav className="relative bg-white shadow-sm">
@@ -54,6 +72,7 @@ const Navbar = ({ user, onLogout }) => {
                 >
                   <FaUser />
                   <span>{user.name}</span>
+                  <span className="text-xs text-gray-500">({user.role})</span>
                 </button>
                 {showUserMenu && (
                   <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1">
@@ -92,11 +111,10 @@ const Navbar = ({ user, onLogout }) => {
             )}
           </div>
 
-
           <div className="md:hidden flex items-center">
             <button
               onClick={toggleMenu}
-              className="inline-flex items-center justify-center p-2 rounded-md text-gray-700 hover:text-gray-900  "
+              className="inline-flex items-center justify-center p-2 rounded-md text-gray-700 hover:text-gray-900"
               aria-expanded={isOpen}
               aria-label="Toggle menu"
             >
@@ -111,7 +129,7 @@ const Navbar = ({ user, onLogout }) => {
         </div>
       </div>
 
-      {/* Mobile menu, show/hide based on menu state */}
+      {/* Mobile menu */}
       <div
         className={`${isOpen ? 'translate-x-0 opacity-100' : 'translate-x-full opacity-0'
           } fixed top-16 left-0 bottom-0 bg-white w-full shadow-xl transform transition-all duration-300 ease-in-out md:hidden z-50`}
@@ -136,7 +154,7 @@ const Navbar = ({ user, onLogout }) => {
             <>
               <div className="border-t pt-4">
                 <div className="text-gray-700 mb-2 px-3">
-                  Signed in as: {user.name}
+                  Signed in as: {user.name} ({user.role})
                 </div>
                 <button
                   onClick={() => {

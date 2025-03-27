@@ -49,7 +49,13 @@ const App = () => {
   return (
     <div className="App">
       <Navbar user={user} onLogout={handleLogout} />
-      <Navroutes onLogin={handleLogin} contests={contests} loading={loading} error={error} />
+      <Navroutes 
+        onLogin={handleLogin} 
+        contests={contests} 
+        loading={loading} 
+        error={error} 
+        user={user}
+      />
     </div>
   );
 };

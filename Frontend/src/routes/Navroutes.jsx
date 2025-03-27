@@ -8,8 +8,12 @@ import Students from '../Pages/Students'
 import StudentStats from '../Pages/StudentStats'
 import ContestAttendance from '../Pages/ContestAttendance'
 import ProtectedRoute from '../components/ProtectedRoute'
+import RoleBasedRoute from '../components/RoleBasedRoute'
+import Unauthorized from '../Pages/Unauthorized'
+import AdminDashboard from '../Pages/AdminDashboard'
+import ManageUsers from '../Pages/ManageUsers'
 
-const Navroutes = ({ onLogin, contests, loading, error }) => {
+const Navroutes = ({ onLogin, contests, loading, error, user }) => {
   return (
     <Routes>
       <Route path="/" element={<Home />} />
@@ -33,8 +37,24 @@ const Navroutes = ({ onLogin, contests, loading, error }) => {
           <ContestAttendance />
         </ProtectedRoute>
       } />
+      
+      {/* Admin routes - only accessible to Dean and HOD */}
+      <Route path="/admin/dashboard" element={
+        <RoleBasedRoute allowedRoles={["Dean", "HOD"]}>
+          <AdminDashboard />
+        </RoleBasedRoute>
+      } />
+      
+      {/* Dean-only routes */}
+      <Route path="/admin/manage-users" element={
+        <RoleBasedRoute allowedRoles={["Dean"]}>
+          <ManageUsers />
+        </RoleBasedRoute>
+      } />
+      
       <Route path="/signin" element={<SignIn onLogin={onLogin} />} />
       <Route path="/signup" element={<SignUp onLogin={onLogin} />} />
+      <Route path="/unauthorized" element={<Unauthorized />} />
     </Routes>
   )
 }

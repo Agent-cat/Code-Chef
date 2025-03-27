@@ -5,9 +5,11 @@ const app = express();
 const cors = require("cors");
 const userRouter = require("./routes/user.routes");
 const studentRoutes = require("./routes/student.routes");
+const contestRoutes = require("./routes/contest.routes");
+const adminRoutes = require("./routes/admin.routes");
+const counselorRoutes = require("./routes/counselor.routes");
 const { ConnectDB } = require("./Database/connection");
 const port = process.env.PORT || 4000;
-const contestRoutes = require("./routes/contest.routes");
 
 const axios = require('axios');
 
@@ -97,13 +99,6 @@ const clearNotifiedContests = () => {
     console.log('Cleared notified contests set');
 };
 
-
-
-
-
-
-
-
 ConnectDB();
 app.use(cors({
   origin: '*'
@@ -113,12 +108,12 @@ app.use(express.json());
 app.use("/api/users", userRouter);
 app.use("/api/students", studentRoutes);
 app.use("/api/codechef", contestRoutes);
+app.use("/api/admin", adminRoutes);
+app.use("/api", counselorRoutes);
 
 setInterval(checkAndNotifyContests, 60 * 1000);
 
-
 setInterval(clearNotifiedContests, 7 * 15 * 60 * 60 * 1000);
-
 
 checkAndNotifyContests();
 

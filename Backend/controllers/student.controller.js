@@ -128,9 +128,80 @@ const updateStudent = async (req, res) => {
     }
 };
 
+const batchImportStudents = async (req, res) => {
+    try {
+        const counselorId = req.user.id;
+        const { students } = req.body;
+
+        if (!Array.isArray(students) || students.length === 0) {
+            return res.status(400).json({
+                message: "Please provide an array of students"
+            });
+        }
+
+        const results = {
+            imported: 0,
+            duplicates: 0,
+            errors: []
+        };
+
+        // Process each student
+        for (const student of students) {
+            const { codechefId, studentId, studentName } = student;
+
+            if (!codechefId || !studentId || !studentName) {
+                results.errors.push({
+                    student,
+                    error: "Missing required fields"
+                });
+                continue;
+            }
+
+            // Check if student already exists
+            const existingStudent = await Student.findOne({ studentId });
+            if (existingStudent) {
+                results.duplicates++;
+                continue;
+            }
+
+            // Create new student
+            const newStudent = await Student.create({
+                codechefId,
+                studentId,
+                studentName,
+                counselorName: counselorId
+            });
+
+            // Add student to counselor's list
+            await User.findByIdAndUpdate(
+                counselorId,
+                { $push: { counselingStudents: newStudent._id } },
+                { new: true }
+            );
+
+            results.imported++;
+        }
+
+        res.status(201).json({
+            message: "Batch import completed",
+            imported: results.imported,
+            duplicates: results.duplicates,
+            errors: results.errors.length > 0 ? results.errors : undefined
+        });
+
+    } catch (error) {
+        console.error("Error in batch import:", error);
+        res.status(500).json({
+            message: "Error importing students",
+            error: error.message
+        });
+    }
+};
+
 module.exports = {
     addStudentToCounselor,
     getStudents,
     deleteStudent,
-    updateStudent
+    updateStudent,
+    batchImportStudents
 };
