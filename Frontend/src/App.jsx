@@ -44,6 +44,7 @@ const App = () => {
     localStorage.removeItem('token');
     setUser(null);
     navigate('/');
+    
   };
 
   return (
