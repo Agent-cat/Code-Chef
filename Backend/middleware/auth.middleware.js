@@ -14,16 +14,16 @@ const authMiddleware = async (req, res, next) => {
             return res.status(500).json({ message: "JWT_SECRET not configured" });
         }
 
-        // Verify token
+      
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-        // Get user from database
+        
         const user = await User.findById(decoded.id).select("-password");
         if (!user) {
             return res.status(401).json({ message: "User not found" });
         }
 
-        // Add user to request object
+       
         req.user = user;
         next();
     } catch (error) {

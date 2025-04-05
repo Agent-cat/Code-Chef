@@ -45,27 +45,27 @@ const Signup = async (req, res) => {
       return res.status(400).json({ message: "Please fill all required fields" });
     }
 
-    // Check if email already exists
+    
     const existingUser = await User.findOne({ email });
     if (existingUser) {
       return res.status(400).json({ message: "User with this email already exists" });
     }
 
-    // Check if counselorId already exists
+    
     const existingCounselor = await User.findOne({ counselorId });
     if (existingCounselor) {
       return res.status(400).json({ message: "User with this counselor ID already exists" });
     }
 
-    // Validate role
+ 
     const validRoles = ["Dean", "HOD", "counselor"];
     const userRole = role && validRoles.includes(role) ? role : "counselor";
 
-    // Hash password
+    
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
 
-    // Create new user
+    
     const newUser = new User({
       name,
       email,
@@ -76,7 +76,7 @@ const Signup = async (req, res) => {
 
     await newUser.save();
 
-    // Generate JWT token
+   
     if (!process.env.JWT_SECRET) {
       return res.status(500).json({ message: "JWT_SECRET not configured" });
     }

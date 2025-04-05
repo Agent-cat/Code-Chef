@@ -145,7 +145,7 @@ const batchImportStudents = async (req, res) => {
             errors: []
         };
 
-        // Process each student
+        
         for (const student of students) {
             const { codechefId, studentId, studentName } = student;
 
@@ -157,14 +157,14 @@ const batchImportStudents = async (req, res) => {
                 continue;
             }
 
-            // Check if student already exists
+            
             const existingStudent = await Student.findOne({ studentId });
             if (existingStudent) {
                 results.duplicates++;
                 continue;
             }
 
-            // Create new student
+           
             const newStudent = await Student.create({
                 codechefId,
                 studentId,
@@ -172,7 +172,7 @@ const batchImportStudents = async (req, res) => {
                 counselorName: counselorId
             });
 
-            // Add student to counselor's list
+            
             await User.findByIdAndUpdate(
                 counselorId,
                 { $push: { counselingStudents: newStudent._id } },

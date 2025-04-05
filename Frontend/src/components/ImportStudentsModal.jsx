@@ -64,9 +64,9 @@ const ImportStudentsModal = ({ isOpen, onClose, onImport }) => {
   };
 
   const processData = (data) => {
-    // Validate and transform the data
+   
     const processedData = data.map(row => {
-      // Try to match expected column names with various possible formats
+  
       const studentName = row.studentName || row.StudentName || row['Student Name'] || row.Name || row.name;
       const studentId = row.studentId || row.StudentId || row['Student ID'] || row.ID || row.id;
       const codechefId = row.codechefId || row.CodechefId || row['Codechef ID'] || row.Codechef || row.codechef;

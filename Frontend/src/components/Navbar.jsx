@@ -26,7 +26,7 @@ const Navbar = ({ user, onLogout }) => {
     setShowUserMenu(false);
   };
 
-  // Determine which nav items to show based on user role
+  
   let navItems = [...publicNavConstants];
   
   if (user) {

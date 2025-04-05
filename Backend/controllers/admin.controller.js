@@ -6,7 +6,6 @@ const getAdminStats = async (req, res) => {
     const totalCounselors = await User.countDocuments({ role: "counselor" });
     const totalStudents = await Student.countDocuments();
     
-    // This is a placeholder - you would need to implement actual contest fetching
     const activeContests = 5; 
 
     res.json({
@@ -33,7 +32,7 @@ const updateUser = async (req, res) => {
     const { id } = req.params;
     const { name, email, counselorId, role } = req.body;
 
-    // Validate role
+   
     if (!["Dean", "HOD", "counselor"].includes(role)) {
       return res.status(400).json({ message: "Invalid role" });
     }
