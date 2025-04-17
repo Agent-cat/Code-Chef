@@ -163,7 +163,6 @@ const batchImportStudents = async (req, res) => {
                 results.duplicates++;
                 continue;
             }
-
            
             const newStudent = await Student.create({
                 codechefId,
