@@ -6,10 +6,12 @@ const {
     getStudents,
     deleteStudent,
     updateStudent,
-    batchImportStudents
+    batchImportStudents,
+    getStudentById
 } = require("../controllers/student.controller");
 
 router.get("/", authMiddleware, getStudents);
+router.get("/:id", authMiddleware, getStudentById);
 router.post("/add-student", authMiddleware, addStudentToCounselor);
 router.post("/batch-import", authMiddleware, batchImportStudents);
 router.delete("/:id", authMiddleware, deleteStudent);

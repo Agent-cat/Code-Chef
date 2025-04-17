@@ -18,6 +18,26 @@ const StudentForm = ({ onSubmit, initialData, formData, setFormData }) => (
             />
         </div>
         <div>
+            <label className='block text-sm font-medium text-gray-700 mb-1'>Leetcode ID</label>
+            <input
+                type='text'
+                value={formData.leetcodeId}
+                onChange={(e) => setFormData({ ...formData, leetcodeId: e.target.value })}
+                className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent'
+                required
+            />
+        </div>
+        <div>
+            <label className='block text-sm font-medium text-gray-700 mb-1'>CodeForces ID</label>
+            <input
+                type='text'
+                value={formData.codeforcesId}
+                onChange={(e) => setFormData({ ...formData, codeforcesId: e.target.value })}
+                className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent'
+                required
+            />
+        </div>
+        <div>
             <label className='block text-sm font-medium text-gray-700 mb-1'>Student ID</label>
             <input
                 type='text'
@@ -53,6 +73,8 @@ const Students = () => {
     const [filteredStudents, setFilteredStudents] = useState([]);
     const [formData, setFormData] = useState({
         codechefId: '',
+        leetcodeId: '',
+        codeforcesId: '',
         studentId: '',
         studentName: ''
     });
@@ -110,6 +132,8 @@ const Students = () => {
     const resetForm = () => {
         setFormData({
             codechefId: '',
+            leetcodeId: '',
+            codeforcesId: '',
             studentId: '',
             studentName: ''
         });
@@ -190,6 +214,8 @@ const Students = () => {
         setSelectedStudent(student);
         setFormData({
             codechefId: student.codechefId,
+            leetcodeId: student.leetcodeId,
+            codeforcesId: student.codeforcesId,
             studentId: student.studentId,
             studentName: student.studentName
         });
@@ -295,14 +321,9 @@ const Students = () => {
                     </div>
                 </div>
 
-                {error && (
-                    <div className='fixed top-4 right-4 left-4 sm:left-auto bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded z-50'>
-                        {error}
-                    </div>
-                )}
-                {success && (
-                    <div className='fixed top-4 right-4 left-4 sm:left-auto bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded z-50'>
-                        {success}
+                {(success || error) && (
+                    <div className={`p-4 rounded-md mb-4 ${success ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}>
+                        {success || error}
                     </div>
                 )}
 
@@ -311,7 +332,7 @@ const Students = () => {
                     {filteredStudents.map((student) => (
                         <div key={student._id} className="bg-white p-4 rounded-lg shadow">
                             <Link
-                                to={`/student-stats/${student.codechefId}`}
+                                to={`/student/${student._id}`}
                                 className="text-lg font-medium text-blue-600 hover:text-blue-800 hover:underline block mb-2"
                             >
                                 {student.studentName}
@@ -348,6 +369,8 @@ const Students = () => {
                                 <th className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase'>Student Name</th>
                                 <th className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase'>Student ID</th>
                                 <th className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase'>CodeChef ID</th>
+                                <th className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase'>Leetcode ID</th>
+                                <th className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase'>CodeForces ID</th>
                                 <th className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase'>Actions</th>
                             </tr>
                         </thead>
@@ -356,7 +379,7 @@ const Students = () => {
                                 <tr key={student._id} className="hover:bg-gray-50">
                                     <td className='px-6 py-4 whitespace-nowrap'>
                                         <Link
-                                            to={`/student-stats/${student.codechefId}`}
+                                            to={`/student/${student._id}`}
                                             className="text-blue-600 hover:text-blue-800 hover:underline"
                                         >
                                             {student.studentName}
@@ -364,6 +387,8 @@ const Students = () => {
                                     </td>
                                     <td className='px-6 py-4 whitespace-nowrap'>{student.studentId}</td>
                                     <td className='px-6 py-4 whitespace-nowrap'>{student.codechefId}</td>
+                                    <td className='px-6 py-4 whitespace-nowrap'>{student.leetcodeId}</td>
+                                    <td className='px-6 py-4 whitespace-nowrap'>{student.codeforcesId}</td>
                                     <td className='px-6 py-4 whitespace-nowrap'>
                                         <div className="flex space-x-3">
                                             <button

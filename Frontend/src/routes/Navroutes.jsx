@@ -6,6 +6,7 @@ import SignUp from '../Pages/SignUp'
 import Contest from '../Pages/Contest'
 import Students from '../Pages/Students'
 import StudentStats from '../Pages/StudentStats'
+import StudentProfile from '../Pages/StudentProfile'
 import ContestAttendance from '../Pages/ContestAttendance'
 import ProtectedRoute from '../components/ProtectedRoute'
 import RoleBasedRoute from '../components/RoleBasedRoute'
@@ -25,6 +26,11 @@ const Navroutes = ({ onLogin, contests, loading, error, user }) => {
       <Route path="/students" element={
         <ProtectedRoute>
           <Students />
+        </ProtectedRoute>
+      } />
+      <Route path="/student/:studentId" element={
+        <ProtectedRoute>
+          <StudentProfile />
         </ProtectedRoute>
       } />
       <Route path="/student-stats/:handle" element={

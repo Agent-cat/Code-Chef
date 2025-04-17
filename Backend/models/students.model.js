@@ -4,6 +4,12 @@ const studentSchema = new mongoose.Schema({
         type: String,
         required: "CodeChef is required"
     },
+    leetcodeId: {
+        type: String
+    },
+    codeforcesId: {
+        type: String
+    },
     studentId: {
         type: String,
         required: "StudentId is required",
@@ -16,9 +22,7 @@ const studentSchema = new mongoose.Schema({
     counselorName: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
-
     },
-
 }, { timestamps: true });
 
 const Student = mongoose.model("Student", studentSchema);

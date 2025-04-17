@@ -5,7 +5,7 @@ const User = require("../models/user.model");
 const addStudentToCounselor = async (req, res) => {
     try {
         const counselorId = req.user.id;
-        const { codechefId, studentId, studentName } = req.body;
+        const { codechefId, studentId, studentName, leetcodeId, codeforcesId } = req.body;
 
         if (!codechefId || !studentId || !studentName) {
             return res.status(400).json({
@@ -24,6 +24,8 @@ const addStudentToCounselor = async (req, res) => {
             codechefId,
             studentId,
             studentName,
+            leetcodeId,
+            codeforcesId,
             counselorName: counselorId
         });
 
@@ -98,7 +100,7 @@ const updateStudent = async (req, res) => {
     try {
         const counselorId = req.user.id;
         const studentId = req.params.id;
-        const { codechefId, studentId: newStudentId, studentName } = req.body;
+        const { codechefId, studentId: newStudentId, studentName, leetcodeId, codeforcesId } = req.body;
 
         const student = await Student.findById(studentId);
         if (!student) {
@@ -111,7 +113,13 @@ const updateStudent = async (req, res) => {
 
         const updatedStudent = await Student.findByIdAndUpdate(
             studentId,
-            { codechefId, studentId: newStudentId, studentName },
+            { 
+                codechefId, 
+                studentId: newStudentId, 
+                studentName,
+                leetcodeId,
+                codeforcesId
+            },
             { new: true }
         );
 
@@ -147,7 +155,7 @@ const batchImportStudents = async (req, res) => {
 
         
         for (const student of students) {
-            const { codechefId, studentId, studentName } = student;
+            const { codechefId, studentId, studentName, leetcodeId, codeforcesId } = student;
 
             if (!codechefId || !studentId || !studentName) {
                 results.errors.push({
@@ -168,6 +176,8 @@ const batchImportStudents = async (req, res) => {
                 codechefId,
                 studentId,
                 studentName,
+                leetcodeId,
+                codeforcesId,
                 counselorName: counselorId
             });
 
@@ -197,10 +207,36 @@ const batchImportStudents = async (req, res) => {
     }
 };
 
+const getStudentById = async (req, res) => {
+    try {
+        const counselorId = req.user.id;
+        const studentId = req.params.id;
+
+        const student = await Student.findById(studentId);
+        
+        if (!student) {
+            return res.status(404).json({ message: "Student not found" });
+        }
+
+        if (student.counselorName.toString() !== counselorId) {
+            return res.status(403).json({ message: "Not authorized to view this student" });
+        }
+
+        res.json({ student });
+    } catch (error) {
+        console.error("Error fetching student:", error);
+        res.status(500).json({
+            message: "Error fetching student",
+            error: error.message
+        });
+    }
+};
+
 module.exports = {
     addStudentToCounselor,
     getStudents,
     deleteStudent,
     updateStudent,
-    batchImportStudents
+    batchImportStudents,
+    getStudentById
 };
