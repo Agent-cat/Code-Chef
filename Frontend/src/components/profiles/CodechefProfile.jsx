@@ -7,7 +7,7 @@ const CodechefProfile = ({ codechefId }) => {
     const fetchCodechefData = async () => {
         setLoading(true);
         try {
-            const response = await fetch(`https://codechef-api.vercel.app/handle/${codechefId}`);
+            const response = await fetch(`${import.meta.env.VITE_CODECHEF_API_URL}/handle/${codechefId}`);
             const data = await response.json();
             setCodechefData(data);
         } catch (error) {
@@ -127,4 +127,4 @@ const CodechefProfile = ({ codechefId }) => {
     );
 };
 
-export default CodechefProfile; 
+export default CodechefProfile;

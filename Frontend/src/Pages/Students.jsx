@@ -115,7 +115,7 @@ const Students = () => {
     const fetchStudents = async () => {
         try {
             const token = localStorage.getItem('token');
-            const response = await fetch('http://localhost:3000/api/students', {
+            const response = await fetch(`${import.meta.env.VITE_BACKEND_API_URL}/api/students`, {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
@@ -143,7 +143,7 @@ const Students = () => {
         e.preventDefault();
         try {
             const token = localStorage.getItem('token');
-            const response = await fetch('http://localhost:3000/api/students/add-student', {
+            const response = await fetch(`${import.meta.env.VITE_BACKEND_API_URL}/api/students/add-student`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -167,7 +167,7 @@ const Students = () => {
         e.preventDefault();
         try {
             const token = localStorage.getItem('token');
-            const response = await fetch(`http://localhost:3000/api/students/${selectedStudent._id}`, {
+            const response = await fetch(`${import.meta.env.VITE_BACKEND_API_URL}/api/students/${selectedStudent._id}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -190,7 +190,7 @@ const Students = () => {
     const handleDelete = async () => {
         try {
             const token = localStorage.getItem('token');
-            const response = await fetch(`http://localhost:3000/api/students/${selectedStudent._id}`, {
+            const response = await fetch(`${import.meta.env.VITE_BACKEND_API_URL}/api/students/${selectedStudent._id}`, {
                 method: 'DELETE',
                 headers: {
                     'Authorization': `Bearer ${token}`
@@ -229,7 +229,7 @@ const Students = () => {
     const handleBatchImport = async (students) => {
         try {
             const token = localStorage.getItem('token');
-            const response = await fetch('http://localhost:3000/api/students/batch-import', {
+            const response = await fetch(`${import.meta.env.VITE_BACKEND_API_URL}/api/students/batch-import`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

@@ -15,7 +15,7 @@ const ContestAttendance = ({ contests }) => {
             try {
                 setLoading(true);
                 const token = localStorage.getItem('token');
-                const studentsResponse = await axios.get('http://localhost:3000/api/students', {
+                const studentsResponse = await axios.get(`${import.meta.env.VITE_BACKEND_API_URL}/api/students`, {
                     headers: {
                         'Authorization': `Bearer ${token}`
                     }
@@ -25,7 +25,7 @@ const ContestAttendance = ({ contests }) => {
                 const attendanceData = await Promise.all(
                     students.map(async (student) => {
                         try {
-                            const response = await axios.get(`https://codechef-api.vercel.app/handle/${student.codechefId}`);
+                            const response = await axios.get(`${import.meta.env.VITE_CODECHEF_API_URL}/handle/${student.codechefId}`);
                             const hasAttempted = response.data.ratingData?.some(
                                 contest => contest.code.slice(0, -1) === contestCode
                             ) || false;
@@ -193,4 +193,4 @@ const ContestAttendance = ({ contests }) => {
     );
 };
 
-export default ContestAttendance; 
+export default ContestAttendance;

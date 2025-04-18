@@ -13,7 +13,7 @@ const AdminDashboard = () => {
       try {
         setLoading(true);
         const token = localStorage.getItem('token');
-        const response = await axios.get('http://localhost:3000/api/counselors', {
+        const response = await axios.get(`${import.meta.env.VITE_BACKEND_API_URL}/api/counselors`, {
           headers: {
             'Authorization': `Bearer ${token}`
           }

@@ -12,7 +12,7 @@ const StudentStats = () => {
     useEffect(() => {
         const fetchUserData = async () => {
             try {
-                const response = await axios.get(`https://codechef-api.vercel.app/handle/${handle}`);
+                const response = await axios.get(`${import.meta.env.VITE_CODECHEF_API_URL}/handle/${handle}`);
                 console.log('API Response:', response.data);
                 setUserData(response.data);
             } catch (err) {

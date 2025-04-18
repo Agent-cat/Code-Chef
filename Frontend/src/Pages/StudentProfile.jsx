@@ -70,7 +70,7 @@ const StudentProfile = () => {
         const fetchStudent = async () => {
             try {
                 const token = localStorage.getItem('token');
-                const response = await fetch(`http://localhost:3000/api/students/${studentId}`, {
+                const response = await fetch(`${import.meta.env.VITE_BACKEND_API_URL}/api/students/${studentId}`, {
                     headers: {
                         'Authorization': `Bearer ${token}`
                     }
@@ -165,4 +165,4 @@ const StudentProfile = () => {
     );
 };
 
-export default StudentProfile; 
+export default StudentProfile;

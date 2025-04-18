@@ -14,7 +14,7 @@ const LeetcodeProfile = ({ leetcodeId }) => {
         setLoading(true);
         setError(null);
         try {
-            const response = await fetch(`https://leetcode-api-faisalshohag.vercel.app/${leetcodeId}`);
+            const response = await fetch(`${import.meta.env.VITE_LEETCODE_API_URL}/${leetcodeId}`);
             if (!response.ok) {
                 throw new Error('Failed to fetch LeetCode data');
             }
@@ -253,4 +253,4 @@ const LeetcodeProfile = ({ leetcodeId }) => {
     );
 };
 
-export default LeetcodeProfile; 
+export default LeetcodeProfile;

@@ -21,7 +21,7 @@ const ManageUsers = () => {
     try {
       setLoading(true);
       const token = localStorage.getItem('token');
-      const response = await fetch('http://localhost:3000/api/admin/users', {
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_API_URL}/api/admin/users`, {
         headers: {
           'Authorization': `Bearer ${token}`
         }
@@ -55,7 +55,7 @@ const ManageUsers = () => {
     e.preventDefault();
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch(`http://localhost:3000/api/admin/users/${selectedUser._id}`, {
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_API_URL}/api/admin/users/${selectedUser._id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -212,4 +212,4 @@ const ManageUsers = () => {
   );
 };
 
-export default ManageUsers; 
+export default ManageUsers;

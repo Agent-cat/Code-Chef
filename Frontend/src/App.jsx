@@ -19,7 +19,7 @@ const App = () => {
 
     const fetchContests = async () => {
       try {
-        const response = await axios.get('http://localhost:3000/api/codechef/contests');
+        const response = await axios.get(`${import.meta.env.VITE_BACKEND_API_URL}/api/codechef/contests`);
         setContests({
           future: response.data.future_contests,
           past: response.data.past_contests
@@ -39,14 +39,11 @@ const App = () => {
     setUser(userData);
   };
 
-
-  
   const handleLogout = () => {
     localStorage.removeItem('user');
     localStorage.removeItem('token');
     setUser(null);
     navigate('/');
-
   };
 
   return (
