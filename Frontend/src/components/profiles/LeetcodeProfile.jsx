@@ -60,12 +60,12 @@ const LeetcodeProfile = ({ leetcodeId }) => {
 
     if (!leetcodeData) return null;
 
-    // Safely access nested properties with optional chaining and fallbacks
+    
     const totalSubmissions = leetcodeData?.totalSubmissions?.find?.(s => s?.difficulty === 'All')?.submissions ?? 0;
     const acceptedSubmissions = leetcodeData?.matchedUserStats?.acSubmissionNum?.find?.(s => s?.difficulty === 'All')?.submissions ?? 0;
     const acceptanceRate = totalSubmissions ? ((acceptedSubmissions / totalSubmissions) * 100).toFixed(1) : 0;
 
-    // Check if required data exists
+    
     if (!leetcodeData.totalSubmissions || !leetcodeData.matchedUserStats) {
         return (
             <div className="text-center py-8">

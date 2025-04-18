@@ -414,7 +414,7 @@ const Students = () => {
                     </table>
                 </div>
 
-                {/* Add Student Modal */}
+                
                 <StudentModal
                     isOpen={isAddModalOpen}
                     onClose={() => setIsAddModalOpen(false)}
@@ -441,7 +441,7 @@ const Students = () => {
                     />
                 </StudentModal>
 
-                {/* Delete Confirmation Modal */}
+               
                 <ConfirmationModal
                     isOpen={isDeleteModalOpen}
                     onClose={() => setIsDeleteModalOpen(false)}
@@ -449,7 +449,7 @@ const Students = () => {
                     message="Are you sure you want to delete this student?"
                 />
 
-                {/* Import Students Modal */}
+               
                 <ImportStudentsModal
                     isOpen={isImportModalOpen}
                     onClose={() => setIsImportModalOpen(false)}

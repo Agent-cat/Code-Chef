@@ -8,7 +8,7 @@ const CodeforcesProfile = ({ codeforcesId }) => {
     const fetchCodeforcesData = async () => {
         setLoading(true);
         try {
-            // Fetch user info and rating history in parallel
+            
             const [userResponse, ratingResponse] = await Promise.all([
                 fetch(`https://codeforces.com/api/user.info?handles=${codeforcesId}`),
                 fetch(`https://codeforces.com/api/user.rating?handle=${codeforcesId}`)
